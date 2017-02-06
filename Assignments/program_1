@@ -1,0 +1,210 @@
+
+/**
+* Program-1
+* Marcus Moisant
+* This program reads in images stored as rgb values in a space delimited file format.
+* 1063 Data Structures
+* Spring 2017
+* 06 02 2017
+*/
+
+#include<iostream>
+#include<fstream>
+#include<math.h>
+
+using namespace std;
+
+struct rgb
+{
+    int r;
+    int g;
+    int b;
+};
+
+class Image
+{
+  private:
+  rgb **imgArray;
+  public:
+  Image(int width,int height,char *pink)
+  {
+    int r,g,b;
+    int row = 0;
+    int col = 0;
+    
+    imgArray = new rgb*[height];
+    for (int i=0;i<height;i++)
+    {
+      imgArray[i] = new rgb[width];
+    }
+    
+    ifstream ifile;
+    ifile.open(pink);
+    
+    while(!ifile.eof())
+    {
+      ifile>>imgArray[row][col].r;
+      ifile>>imgArray[row][col].g;
+      ifile>>imgArray[row][col].b;
+      col++;
+      if(col == width)
+      {
+        col = 0;
+        row++;
+      }
+    }
+  }
+  rgb GetColor(int width,int height)
+  //???void readImage(rgb** image,int &width,int &height,ofstream &ofile)
+  {
+    for(int i=0;i<height;i++)
+    {
+      for(int j=0;j<width;j++)
+      {
+        ifstream ifile;
+        
+        ifile>>imgArray[i][j].r>>imgArray[i][j].g>>imgArray[i][j].b;            
+      }
+    }
+  }
+  
+  /**
+* @FunctionName: flipHorz
+* @Description: 
+*     Loops through a 2D array and turns every RGB value into its grayscale equivalent.
+* @Params:
+*    rgb** image - 2D array holding rgb values
+*    int width - width of image
+*    int height - height of image
+* @Returns:
+*    void
+*/
+  void flipHorz(int width,int height,rgb color)
+  {
+    for (int x = 0; x < width/2; x++)
+    {
+      for (int y = 0; y < height; y++)
+      {
+        imgArray[x][y]=imgArray[width-x][y];
+      }
+    }
+      
+  }
+  
+  
+/**
+* @FunctionName: flipVert
+* @Description: 
+*     Loops through a 2D array and turns every RGB value into its grayscale equivalent.
+* @Params:
+*    rgb** image - 2D array holding rgb values
+*    int width - width of image
+*    int height - height of image
+* @Returns:
+*    void
+*/
+  void flipVert(int width,int height,rgb color)
+  {
+    for (int x = 0; x < width; x++)
+    {
+      for (int y = 0; y < height/2; y++)
+      {
+        imgArray[x][y]=imgArray[x][height-y];
+      }
+    }
+  }
+
+/**
+* @FunctionName: grayScale
+* @Description: 
+*     Loops through a 2D array and turns every RGB value into its grayscale equivalent.
+* @Params:
+*    rgb** image - 2D array holding rgb values
+*    int width - width of image
+*    int height - height of image
+* @Returns:
+*    void
+*/
+
+void GrayScale(int width, int height,rgb* color)
+{
+    for (int x = 0; x < width; x++)
+    {
+      for (int y = 0; y < height/2; y++)
+      {
+        int r = imgArray[x][y].r;
+        int g = imgArray[x][y].g;
+        int b = imgArray[x][y].b;
+        int gray = (r + g + b) / 3;
+        r = gray;
+        g = gray;
+        b = gray;
+      }
+    }
+  }
+
+void readImage(rgb** image,int &width,int &height,ofstream &ofile)
+{
+    // Hmmm, what's up with the width and height references
+}
+
+void saveImage(rgb** image,int width,int height,ofstream &ofile)
+{
+    cout<<width<<" "<<height<<endl;
+    for(int i=0;i<height;i++)
+    {
+      for(int j=0;j<width;j++)
+      {
+        cout<<imgArray[i][j].r<<", "<<imgArray[i][j].g<<" "<<imgArray[i][j].b<<" ";
+      }
+      ofile<<endl;
+    }
+    // your code
+}
+
+};
+
+int main()
+{
+  ifstream ifile;          //Input / output files
+  ofstream ofile;
+  ifile.open("pink.txt");
+  ofile.open("bot2.csv");   
+    
+  int width;               //width of image
+  int height;              //height of image
+    
+  rgb **imgArray;         //Pointer var for our 2D array because we         
+                            //don't know how big the image will be!
+
+  //ifile>>width>>height;   //Read in width and height from top of input file
+                            //We need this so we can make the array the right 
+                            //size. After we get these two values, we can
+                            //now allocate memory for our 2D array.
+
+  imgArray = new rgb*[height];    //This array points to every row
+
+  for(int i=0;i<height;i++)
+  {
+    imgArray[i] = new rgb[width]; //Now allocate each row of rgb's
+  }
+    
+    //Read the color data in from our txt file
+
+    
+    //We could make any changes we want to the color image here
+    
+    //Write out our color data to a new file
+    /**cout<<width<<" "<<height<<endl;
+    for(int i=0;i<height;i++)
+    {
+      for(int j=0;j<width;j++)
+      {
+        cout<<imgArray[i][j].r<<", "<<imgArray[i][j].g<<" "<<imgArray[i][j].b<<" ";
+      }
+      ofile<<endl;
+    }
+    */
+   
+  return 0;
+}
