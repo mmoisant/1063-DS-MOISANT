@@ -1,4 +1,3 @@
-
 /**
 * Program-1
 * Marcus Moisant
@@ -21,27 +20,27 @@ struct rgb
     int b;
 };
 
-class Image
+class image
 {
   private:
-  rgb **imgArray;
+  rgb **imgArray;                           // size unknown
   public:
-  Image(int width,int height,char *pink)
+  image(int width,int height,char *pink)    //width and height of image
   {
     int r,g,b;
     int row = 0;
     int col = 0;
     
-    imgArray = new rgb*[height];
+    imgArray = new rgb*[height];            //this array points to every row
     for (int i=0;i<height;i++)
     {
-      imgArray[i] = new rgb[width];
+      imgArray[i] = new rgb[width];         //allocates each row of rgb's
     }
     
-    ifstream ifile;
+    ifstream ifile;                         //inputfile
     ifile.open(pink);
     
-    while(!ifile.eof())
+    while(!ifile.eof())                     //reads txt file all the way through for all w&h values
     {
       ifile>>imgArray[row][col].r;
       ifile>>imgArray[row][col].g;
@@ -54,7 +53,7 @@ class Image
       }
     }
   }
-  rgb GetColor(int width,int height)
+  rgb GetColor(rgb** image,int &width,int &height,ofstream &ofile)        //reads color data from infile
   //???void readImage(rgb** image,int &width,int &height,ofstream &ofile)
   {
     for(int i=0;i<height;i++)
@@ -67,7 +66,7 @@ class Image
       }
     }
   }
-  
+                                        //functions that change follow, horz, vert, grayscale
   /**
 * @FunctionName: flipHorz
 * @Description: 
@@ -79,7 +78,7 @@ class Image
 * @Returns:
 *    void
 */
-  void flipHorz(int width,int height,rgb color)
+  void flipHorz(rgb** image,int width,int height,rgb color)
   {
     for (int x = 0; x < width/2; x++)
     {
@@ -103,7 +102,7 @@ class Image
 * @Returns:
 *    void
 */
-  void flipVert(int width,int height,rgb color)
+  void flipVert(rgb** image,int width,int height,rgb color)
   {
     for (int x = 0; x < width; x++)
     {
@@ -124,7 +123,7 @@ class Image
 *    int height - height of image
 * @Returns:
 *    void
-*/
+
 
 void GrayScale(int width, int height,rgb* color)
 {
@@ -141,13 +140,12 @@ void GrayScale(int width, int height,rgb* color)
         b = gray;
       }
     }
-  }
-
-void readImage(rgb** image,int &width,int &height,ofstream &ofile)
+  }*/ //GrayScale
+/**void readImage(rgb** image,int &width,int &height,ofstream &ofile)
 {
     // Hmmm, what's up with the width and height references
 }
-
+*/ //read
 void saveImage(rgb** image,int width,int height,ofstream &ofile)
 {
     cout<<width<<" "<<height<<endl;
@@ -174,7 +172,7 @@ int main()
   int width;               //width of image
   int height;              //height of image
     
-  rgb **imgArray;         //Pointer var for our 2D array because we         
+  //rgb **imgArray;         //Pointer var for our 2D array because we         
                             //don't know how big the image will be!
 
   //ifile>>width>>height;   //Read in width and height from top of input file
@@ -182,12 +180,12 @@ int main()
                             //size. After we get these two values, we can
                             //now allocate memory for our 2D array.
 
-  imgArray = new rgb*[height];    //This array points to every row
+  //imgArray = new rgb*[height];    //This array points to every row
 
-  for(int i=0;i<height;i++)
-  {
-    imgArray[i] = new rgb[width]; //Now allocate each row of rgb's
-  }
+  //for(int i=0;i<height;i++)
+  //{
+  //  imgArray[i] = new rgb[width]; //Now allocate each row of rgb's
+  //}
     
     //Read the color data in from our txt file
 
@@ -205,6 +203,35 @@ int main()
       ofile<<endl;
     }
     */
-   
+   int operation;
+   cout<<"Select operation:"<<endl<<"1.Filp Horizantal"<<endl;
+   cout<<"2.Flip Vertical"<<endl<<"3.GrayScale"<<endl<<"4.Exit";
+   cin >> operation;
+   while(operation != 4)
+   {
+     if(operation == 1)
+     {
+     //flipHorz
+     //saveImage = filpHorz(width,height,"pink.txt")
+     }
+     else if(operation == 2)
+     {
+     //flipVert
+     //filpVert(width,height,"pink.txt")
+     }
+     else if(operation == 3)
+     {
+     //grayscale
+     //GrayScale(width,height,"pink.txt")
+     }
+     else
+     {
+     cout<<"Please enter an operation 1-4.";
+     }
+     cout<<"Select operation:"<<endl<<"1.Filp Horizantal"<<endl;
+     cout<<"2.Flip Vertical"<<endl<<"3.GrayScale"<<endl<<"4.Exit";
+     cin >> operation;
+   }
+   cout << "Goodbye!";
   return 0;
 }
