@@ -2,7 +2,7 @@
 * Homework-3
 * Marcus Moisant
 * @Description: 
-*     
+*     This program printes a queue to screen.
 * 1063 Data Structures
 * Spring 2017
 * 01 03 2017
