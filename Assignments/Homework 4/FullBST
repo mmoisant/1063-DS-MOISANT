@@ -122,7 +122,7 @@ int BinarySearch(int* data,int key,int size)
   int right = size-1;
   int middle = (left + right) / 2;
   
-  bool found = true;
+  bool found = false;
   
   
   while(!found)
@@ -134,6 +134,7 @@ int BinarySearch(int* data,int key,int size)
     else if(middle == left || middle == right)
     {
       found == false;
+      break;
     }
     else
     {
@@ -149,9 +150,8 @@ int BinarySearch(int* data,int key,int size)
     
   }
   
-  return -1;
+  return -7;
 }
-
 /**
 * @FunctionName: main
 * @Description: 
