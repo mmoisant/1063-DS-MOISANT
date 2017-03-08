@@ -8,32 +8,24 @@
 * @Returns: 
 *    int - positive value = index / negative value = not found
 */
-int BinarySearch(int* data,int key,int size)
-{
+int BinarySearch(int* data,int key,int size){
   int left = 0;
   int right = size-1;
   int middle = (left + right) / 2;
   
-  bool found = true;
+  bool found = false;
   
   
-  while(!found)
-  {
-    if(data[middle] == key)
-    {
+  while(!found){
+    if(data[middle] == key){
       return middle;
-    }
-    else if(middle == left || middle == right)
-    {
+    }else if(middle == left || middle == right){
       found == false;
-    }
-    else
-    {
-      if(key < data[middle])
-      {
+      break;
+    }else{
+      if(key < data[middle]){
         right = middle;
-      }else
-      {
+      }else{
         left = middle;
       }
       middle = (left + right) / 2;
