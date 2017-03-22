@@ -1,3 +1,11 @@
+//Marcus Moisant
+//Cpms1063
+//Dr. Griffin
+//22 March 2017
+// This program converts infix expression to postfix
+// by stack and queue implementation then calculates value
+// of equation.
+
 #include"Queue.h"
 #include"Stack.h"
 
