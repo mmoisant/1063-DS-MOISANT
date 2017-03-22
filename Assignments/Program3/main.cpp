@@ -36,18 +36,19 @@ void postfix(Queue & Q, Stack & S, string equation)
 	Stack temp(equation.length() + 2);
 	Stack calc(equation.length() + 2);
 	int priority = 0;
+	int peekPri = 0;
 	char peek = '0';
 	int i;
 	int Num1 = 0;
 	int Num2 = 0;
 
+	equation += ')';
+	S.push('(');
+
 	for (i = 0; i < equation.length(); i++)
 	{
-		if (equation[i] == '(')
-		{
-			priority = 0;
-		}
-		else if (equation[i] == '+' || equation[i] == '-')
+		priority = 0;
+		if (equation[i] == '+' || equation[i] == '-')
 		{
 			priority = 1;
 		}
@@ -60,9 +61,10 @@ void postfix(Queue & Q, Stack & S, string equation)
 			priority = 3;
 		}
 
-		if (equation[i] == '0' || '1' || '2' || '3' || '4' || '5' || '6' || '7' || '8' || '9')
+		if (equation[i] >= 48 && equation[i] <= 57)
 		{
 			Q.push(equation[i]);
+			Q.printQueue();
 		}
 		else if (equation[i] == ')')
 		{
@@ -71,6 +73,7 @@ void postfix(Queue & Q, Stack & S, string equation)
 			while (peek != 0)
 			{
 				Q.push(S.pop());
+				Q.printQueue();
 				peek = S.peek();
 			}
 			S.pop();
@@ -79,23 +82,54 @@ void postfix(Queue & Q, Stack & S, string equation)
 		{
 			S.push(equation[i]);
 		}
-		else
+		if (priority > 0)
 		{
 			peek = S.peek();
-			while (peek >= priority)
+			if (peek == '+' || peek == '-')
+			{
+				peekPri = 1;
+			}
+			else if (peek == '*' || peek == '/' || peek == '%')
+			{
+				peekPri = 2;
+			}
+			else if (peek == '^')
+			{
+				peekPri = 3;
+			}
+			while (peekPri >= priority)
 			{
 				Q.push(S.pop());
+				Q.printQueue();
 				peek = S.peek();
+				peekPri = 0;
+				if (peek == '+' || peek == '-')
+				{
+					peekPri = 1;
+				}
+				else if (peek == '*' || peek == '/' || peek == '%')
+				{
+					peekPri = 2;
+				}
+				else if (peek == '^')
+				{
+					peekPri = 3;
+				}
 			}
 			S.push(equation[i]);
 		}
 	}
+
 	while (!S.isEmpty())
 	{
 		char temp = S.pop();
 		if (temp != '(')
+		{
 			Q.push(temp);
+			Q.printQueue();
+		}
 	}
+
 
 	while (!Q.isEmpty())
 	{
