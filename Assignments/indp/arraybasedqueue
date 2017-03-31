@@ -1,0 +1,122 @@
+#include <iostream>
+using namespace std;
+
+class Queue
+{
+private:
+	int arraysize;
+	int *Q;
+	int rear;
+	int front;
+	int numitems;
+	double sum;
+	double product;
+	double ave;
+
+public:
+	Queue(int insize)
+	{
+		arraysize = insize;
+		Q = new int[arraysize];
+		rear = front = numitems = sum = ave = 0;
+		product = 1;
+	}
+
+	void push(int x)
+	{
+		if (full())
+		{
+			cout << "full!" << endl;
+			return;
+		}
+		Q[rear] = x;
+		rear = (rear + 1) % arraysize;
+		numitems++;
+		
+	}
+	int pop()
+	{
+		if (empty())
+		{
+			cout << "empty" << endl;
+			return false;
+		}
+		int temp = Q[front];
+		front = (front + 1) % arraysize;
+		numitems--;
+		return temp;
+	}
+	bool empty()
+	{
+		return (numitems == 0);
+	}
+	bool full()
+	{
+		return (numitems == arraysize);
+	}
+	void printqueue()
+	{
+		int i = front;
+		int j = 0;
+		for (i, j; j<numitems; i = (i + 1) % arraysize, j++)
+		{
+			cout << Q[i] << " ";
+			sum += Q[i];
+			product *= Q[i];
+		}
+
+		cout << endl;
+		//cout << sum << endl;
+		//cout << product << endl;
+		//ave = sum / numitems;
+		//cout << ave << endl;
+
+	}
+
+	void Average()
+	{
+		for (int i = front, int j = 0; j < numitems; i = (i + 1) % arraysize, j++)
+		{
+			sum += Q[i];
+			ave = sum / numitems;
+		}
+			cout << sum<< endl<< ave << endl;
+		
+	}
+	
+	void Product()
+	{
+		for (int i = front, int j = 0; j < numitems; i = (i + 1) % arraysize, j++)
+		{
+			product *= Q[i];
+		}
+		cout << product;
+			
+	}
+};
+	
+
+
+
+int main()
+{
+	srand(17);
+	Queue M(10);
+	for (int i = 0; i < 10; i++)
+	{
+		int r = rand() % 17 + 1;
+		M.push(r);
+		
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		M.pop();
+	}
+	M.printqueue();
+	M.Average();
+	M.Product();
+
+
+	system ("pause");
+	return 0;
+}
