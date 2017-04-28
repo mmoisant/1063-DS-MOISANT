@@ -127,60 +127,69 @@ public:
 	void Run(int generations = 99999){
 		int neighbors = 0;
 		int g = 0;
-		int stop = 0;
-		//int sumB2 = 0;
+		int sumB2 = 0;
 		while (g < generations){
-			stop = killRun();
+			killCorners();
 			for (int i = 0; i < Rows; i++){
 				for (int j = 0; j < Cols; j++){
 					neighbors = CountNeighbors(i, j);
 					if (Board[i][j] == 1 && (neighbors < 2 || neighbors > 3)){
 						Board2[i][j] = -1;
-						//sumB2++;
+						sumB2++;
 					}
 					if (Board[i][j] == 0 && neighbors == 3){
 						Board2[i][j] = 1;
-						//sumB2++;
+						sumB2++;
 					}
 
 				}
-				/*if (sumB2 == 0){
-					g = 99997;
-					pause(1000);
-				}*/
+		
 			}
-			AddGens();
-			pause(500);
-			clear_screen(30);
-			PrintBoard();
-			g++;
-
-
-		}
-
-	}
-
-	int killRun()
-	{
-		int g = 0;
-		int neighbors = 0;
-		int sumB2 = 0;
-		for (int i = 0; i < Rows; i++){
-			for (int j = 0; j < Cols; j++){
-				neighbors = CountNeighbors(i, j);
-				if (Board[i][j] == 1 && (neighbors < 2 || neighbors > 3)){
-					sumB2++;
-				}
-				if (Board[i][j] == 0 && neighbors == 3){
-					sumB2++;
-				}
-
+			
+			if (sumB2 == 0){
+				AddGens();
+				pause(250);
+				clear_screen(30);
+				PrintBoard();
+				g += 97;
+				
 			}
-		}
-		return sumB2;
+			else{
+				AddGens();
+				pause(200);
+				clear_screen(30);
+				PrintBoard();
+				g++;
+			}
 			
 
+		}
+
 	}
+
+	void killCorners()
+	{
+		if (Board[0][0] == 1){
+		Board2[0][0] == -1;
+		//sumB2++;
+		}
+		if (Board[Rows - 1][0] == 1){
+		Board2[Rows - 1][0] == -1;
+		//sumB2++;
+		}
+		if (Board[0][Cols - 1] == 1){
+		Board2[0][Cols - 1] == -1;
+		//sumB2++;
+		}
+		if (Board[Rows - 1][Cols - 1] == 1){
+		Board2[Rows - 1][Cols - 1] == -1;
+		//sumB2++;
+		}
+
+	}
+
+
+	
 
 	void gliderGun()
 	{
@@ -237,22 +246,10 @@ public:
 };
 
 int main(){
-	GameOfLife G(23, 75);
+	GameOfLife G(15, 75);
 
-
-	G.SetCell(5, 1, 1);
-	G.SetCell(5, 2, 1);
-	G.SetCell(6, 1, 1);
-	G.SetCell(6, 2, 1);
-
-
-	/*G.SetCell(3, 37, 1);
-	G.SetCell(4, 37, 1);
-	G.SetCell(5, 37, 1);*/
-
-	//GameOfLife G("gen_one.txt");
-
-	//G.RandomPopulate(60);
+	//Endless Board Test
+	///////////////////
 	/*G.SetCell(0, 5, 1);
 	G.SetCell(0, 6, 1);
 	G.SetCell(0, 7, 1);
@@ -262,7 +259,43 @@ int main(){
 	G.SetCell(2, 5, 1);
 	G.SetCell(2, 6, 1);
 	G.SetCell(2, 7, 1);*/
+
+	//Stable Test
+	/////////////////////
+	/*G.SetCell(5, 1, 1);
+	G.SetCell(5, 2, 1);
+	G.SetCell(6, 1, 1);
+	G.SetCell(6, 2, 1);*/
+
+	//Glider Gun Test
+	/////////////////
 	//G.gliderGun();
+
+	//Corner Test
+	////////////////////
+	/*G.SetCell(0, 0, 1);
+	G.SetCell(1, 1, 1);
+	G.SetCell(14, 0, 1);*/
+	//G.SetCell(1, 1, 1);
+
+
+
+	
+
+	//Glider Gun Test
+	/////////////////
+	//G.gliderGun();
+
+
+	/*G.SetCell(3, 37, 1);
+	G.SetCell(4, 37, 1);
+	G.SetCell(5, 37, 1);*/
+
+	//GameOfLife G("gen_one.txt");
+
+	//G.RandomPopulate(60);
+	
+	
 	G.Run(100);
 	return 0;
 }
