@@ -96,7 +96,7 @@ public:
 	void RandomPopulate(int num){
 		int r = 0;
 		int c = 0;
-		for (int i = 0; i<num; i++){
+		for (int i = 0; i < num; i++){
 			r = rand() % Rows;
 			c = rand() % Cols;
 			Board[r % Rows][c % Cols] = 1;
@@ -119,7 +119,7 @@ public:
 	}
 
 	void clear_screen(int lines){
-		for (int i = 0; i<lines; i++){
+		for (int i = 0; i < lines; i++){
 			cout << endl;
 		}
 	}
@@ -127,31 +127,100 @@ public:
 	void Run(int generations = 99999){
 		int neighbors = 0;
 		int g = 0;
+		int stop = 0;
+		//int sumB2 = 0;
 		while (g < generations){
+			stop = killRun();
 			for (int i = 0; i < Rows; i++){
 				for (int j = 0; j < Cols; j++){
 					neighbors = CountNeighbors(i, j);
 					if (Board[i][j] == 1 && (neighbors < 2 || neighbors > 3)){
 						Board2[i][j] = -1;
+						//sumB2++;
 					}
 					if (Board[i][j] == 0 && neighbors == 3){
 						Board2[i][j] = 1;
+						//sumB2++;
 					}
+
 				}
+				/*if (sumB2 == 0){
+					g = 99997;
+					pause(1000);
+				}*/
 			}
 			AddGens();
-			pause(1000);
+			pause(500);
 			clear_screen(30);
 			PrintBoard();
 			g++;
+
+
 		}
+
+	}
+
+	int killRun()
+	{
+		int g = 0;
+		int neighbors = 0;
+		int sumB2 = 0;
+		for (int i = 0; i < Rows; i++){
+			for (int j = 0; j < Cols; j++){
+				neighbors = CountNeighbors(i, j);
+				if (Board[i][j] == 1 && (neighbors < 2 || neighbors > 3)){
+					sumB2++;
+				}
+				if (Board[i][j] == 0 && neighbors == 3){
+					sumB2++;
+				}
+
+			}
+		}
+		return sumB2;
+			
 
 	}
 
 	void gliderGun()
 	{
 		SetCell(5, 1, 1);
-		SetCell
+		SetCell(5, 2, 1);
+		SetCell(6, 1, 1);
+		SetCell(6, 2, 1);
+		SetCell(5, 11, 1);
+		SetCell(6, 11, 1);
+		SetCell(7, 11, 1);
+		SetCell(4, 12, 1);
+		SetCell(8, 12, 1);
+		SetCell(3, 13, 1);
+		SetCell(3, 14, 1);
+		SetCell(9, 13, 1);
+		SetCell(9, 14, 1);
+		SetCell(6, 15, 1);
+		SetCell(4, 16, 1);
+		SetCell(8, 16, 1);
+		SetCell(5, 17, 1);
+		SetCell(6, 17, 1);
+		SetCell(7, 17, 1);
+		SetCell(6, 18, 1);
+		SetCell(3, 21, 1);
+		SetCell(4, 21, 1);
+		SetCell(5, 21, 1);
+		SetCell(3, 22, 1);
+		SetCell(4, 22, 1);
+		SetCell(5, 22, 1);
+		SetCell(2, 23, 1);
+		SetCell(6, 23, 1);
+		SetCell(1, 25, 1);
+		SetCell(2, 25, 1);
+		SetCell(6, 25, 1);
+		SetCell(7, 25, 1);
+		SetCell(3, 35, 1);
+		SetCell(4, 35, 1);
+		SetCell(3, 36, 1);
+		SetCell(4, 36, 1);
+
 	}
 
 	void pause(int MilliSeconds)
@@ -168,17 +237,23 @@ public:
 };
 
 int main(){
-	GameOfLife G(11, 38);
+	GameOfLife G(23, 75);
+
+
+	G.SetCell(5, 1, 1);
+	G.SetCell(5, 2, 1);
+	G.SetCell(6, 1, 1);
+	G.SetCell(6, 2, 1);
 
 
 	/*G.SetCell(3, 37, 1);
 	G.SetCell(4, 37, 1);
 	G.SetCell(5, 37, 1);*/
 
-	//GameOfLife G("data2.txt");
+	//GameOfLife G("gen_one.txt");
 
 	//G.RandomPopulate(60);
-	G.SetCell(0, 5, 1);
+	/*G.SetCell(0, 5, 1);
 	G.SetCell(0, 6, 1);
 	G.SetCell(0, 7, 1);
 	G.SetCell(1, 5, 1);
@@ -186,7 +261,8 @@ int main(){
 	G.SetCell(1, 7, 1);
 	G.SetCell(2, 5, 1);
 	G.SetCell(2, 6, 1);
-	G.SetCell(2, 7, 1);
+	G.SetCell(2, 7, 1);*/
+	//G.gliderGun();
 	G.Run(100);
 	return 0;
 }
