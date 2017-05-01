@@ -1,8 +1,8 @@
 /**
 * @ProgramName: Program-2
 * @Author: Marcus Moisant
-* @Description: 
-*     This program plays the game of life with 
+* @Description:
+*     This program plays the game of life with
 *	an endless board and ends game when board is stable.
 * @Course: 1063 Data Structures
 * @Semester: Spring 2017
@@ -137,6 +137,7 @@ public:
 	void Run(int generations = 99999){
 		int neighbors = 0;
 		int g = 0;
+		int killer = 0;
 		int sumB2 = 0;
 		while (g < generations){
 			killCorners();
@@ -153,16 +154,17 @@ public:
 					}
 
 				}
-		
+
 			}
-			
+			killer++;
 			if (sumB2 == 0){
 				AddGens();
 				pause(250);
 				clear_screen(30);
 				PrintBoard();
-				g += 97;
-				
+				g += (generations-killer - 3);
+				pause(1000);
+
 			}
 			else{
 				AddGens();
@@ -171,7 +173,7 @@ public:
 				PrintBoard();
 				g++;
 			}
-			
+
 
 		}
 
@@ -180,26 +182,26 @@ public:
 	void killCorners()
 	{
 		if (Board[0][0] == 1){
-		Board2[0][0] == -1;
-		//sumB2++;
+			Board2[0][0] == -1;
+			
 		}
 		if (Board[Rows - 1][0] == 1){
-		Board2[Rows - 1][0] == -1;
-		//sumB2++;
+			Board2[Rows - 1][0] == -1;
+			
 		}
 		if (Board[0][Cols - 1] == 1){
-		Board2[0][Cols - 1] == -1;
-		//sumB2++;
+			Board2[0][Cols - 1] == -1;
+			
 		}
 		if (Board[Rows - 1][Cols - 1] == 1){
-		Board2[Rows - 1][Cols - 1] == -1;
-		//sumB2++;
+			Board2[Rows - 1][Cols - 1] == -1;
+			
 		}
 
 	}
 
 
-	
+
 
 	void gliderGun()
 	{
@@ -258,54 +260,13 @@ public:
 int main(){
 	GameOfLife G(15, 75);
 
-	//Endless Board Test
-	///////////////////
-	/*G.SetCell(0, 5, 1);
-	G.SetCell(0, 6, 1);
-	G.SetCell(0, 7, 1);
-	G.SetCell(1, 5, 1);
-	G.SetCell(1, 6, 1);
-	G.SetCell(1, 7, 1);
-	G.SetCell(2, 5, 1);
-	G.SetCell(2, 6, 1);
-	G.SetCell(2, 7, 1);*/
-
-	//Stable Test
-	/////////////////////
-	/*G.SetCell(5, 1, 1);
-	G.SetCell(5, 2, 1);
-	G.SetCell(6, 1, 1);
-	G.SetCell(6, 2, 1);*/
-
-	//Glider Gun Test
-	/////////////////
-	//G.gliderGun();
-
-	//Corner Test
-	////////////////////
-	/*G.SetCell(0, 0, 1);
-	G.SetCell(1, 1, 1);
-	G.SetCell(14, 0, 1);*/
-	//G.SetCell(1, 1, 1);
-
-
-
-	
-
-	//Glider Gun Test
-	/////////////////
-	//G.gliderGun();
-
-
-	/*G.SetCell(3, 37, 1);
-	G.SetCell(4, 37, 1);
-	G.SetCell(5, 37, 1);*/
-
 	//GameOfLife G("gen_one.txt");
 
+	G.gliderGun();
+
 	//G.RandomPopulate(60);
-	
-	
+
+
 	G.Run(100);
 	return 0;
 }
