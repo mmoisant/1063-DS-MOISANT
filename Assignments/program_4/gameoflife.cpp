@@ -1,12 +1,12 @@
 /**
-* @ProgramName: Program-2
+* @ProgramName: Program-4
 * @Author: Marcus Moisant
 * @Description:
 *     This program plays the game of life with
 *	an endless board and ends game when board is stable.
 * @Course: 1063 Data Structures
 * @Semester: Spring 2017
-* @Date: 01 04 2017
+* @Date: 01 05 2017
 */
 #include <iostream>
 #include <string>
